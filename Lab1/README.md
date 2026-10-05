@@ -100,14 +100,13 @@ erDiagram
 
     ENROLLMENT {
         number enrollment_id PK
-        number student_id FK
-        number course_id FK
+        number student_id FK "UNIQUE(student_id, course_id)"
+        number course_id FK "UNIQUE(student_id, course_id)"
         number teacher_id FK
         date enrollment_date
         number grade "CHECK 0..100"
         string status
         string comment
-        UNIQUE(student_id, course_id)
     }
 
     FACULTY ||--o{ DEPARTMENT : "містить (1:N)"
