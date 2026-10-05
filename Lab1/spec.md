@@ -73,6 +73,7 @@
   - grade (number)- підсумкова оцінка від 0 до 100 балів
   - status (string)- статус зарахування
   - comment (string)- додатковий коментар
+  - UNIQUE(student_id, course_id)
 
 # Зв'язки між сутностями:
 
