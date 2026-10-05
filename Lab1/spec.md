@@ -1,1 +1,75 @@
+# Сутності та атрибути
 
+- FACULTY:
+  - faculty_id (number, PK)- унікальний ідентифікатор
+  - faculty_name (string)- назва факультету
+  - short_name (string)- скорочена назва факультету
+  - building_number (number)- номер корпусу
+  - phone (string)- контактний телефон
+  - email (string, unique)- електронна пошта
+  - dean_name (string)- ПІБ декана
+- DEPARTMENT:
+  - department_id (number, PK)- унікальний ідентифікатор
+  - department_name (string)- назва кафедри
+  - short_name (string)- скорочена назва кафедри
+  - room_number (number)- номер кабінету
+  - phone (string)- контактний телефон
+  - email (string, unique)- електронна пошта
+  - head_name (string)- ПІБ завідувача кафедри
+  - faculty_id (number, FK)- ідентифікатор факультету
+- SPECIALTY:
+  - specialty_id (number, PK)- унікальний ідентифікатор
+  - specialty_name (string)- назва спеціальності
+  - specialty_code (string, unique)- код спеціальності
+  - education_level (string)- рівень освіти
+  - study_form (string)- форма навчання
+  - study_duration (number)- термін навчання
+  - faculty_id (number, FK)- ідентифікатор факультету
+- GROUP:
+  - group_id (number, PK)- унікальний ідентифікатор
+  - group_name (string)- назва навчальної групи
+  - admission_year (number)- рік вступу
+  - course_year (number)- поточний курс навчання
+  - study_form (string)- форма навчання
+  - curator_name (string)- ПІБ куратора групи
+  - specialty_id (number, FK)- ідентифікатор спеціальності
+- STUDENT:
+  - student_id (number, PK)- унікальний ідентифікатор
+  - full_name (string)- ПІБ студента
+  - birth_date (date)- дата народження
+  - gender (string)- стать
+  - email (string, unique)- електронна пошта
+  - phone (string)- номер телефону
+  - address (string)- адреса проживання
+  - admission_date (date)- дата вступу
+  - study_status (string)- статус навчання
+  - group_id (number, FK)- ідентифікатор навчальної групи
+- TEACHER:
+  - teacher_id (number, PK)- унікальний ідентифікатор
+  - full_name (string)- ПІБ викладача
+  - email (string, unique)- електронна пошта
+  - phone (string)- номер телефону
+  - academic_title (string)- вчене звання
+  - academic_degree (string)- науковий ступінь
+  - position (string)- посада
+  - work_experience (number)- стаж роботи
+  - department_id (number, FK)- ідентифікатор кафедри
+- COURSE:
+  - course_id (number, PK)- унікальний ідентифікатор
+  - course_name (string)- назва дисципліни
+  - course_code (string, unique)- код дисципліни
+  - ects_credits (number)- кількість кредитів ECTS
+  - hours (number)- кількість навчальних годин
+  - assessment_type (string)- тип підсумкового контролю
+  - semester (number)- семестр викладання
+  - description (string)- опис дисципліни
+  - department_id (number, FK)- ідентифікатор кафедри
+- ENROLLMENT:
+  - enrollment_id (number, PK)- унікальний ідентифікатор
+  - student_id (number, FK)- ідентифікатор студента
+  - course_id (number, FK)- ідентифікатор курсу
+  - teacher_id (number, FK)- ідентифікатор викладача
+  - enrollment_date (date)- дата зарахування на курс
+  - grade (number)- підсумкова оцінка від 0 до 100 балів
+  - status (string)- статус зарахування
+  - comment (string)- додатковий коментар
