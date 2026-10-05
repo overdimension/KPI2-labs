@@ -70,7 +70,7 @@
   - course_id (number, FK)- ідентифікатор курсу
   - teacher_id (number, FK)- ідентифікатор викладача
   - enrollment_date (date)- дата зарахування на курс
-  - grade (number)- підсумкова оцінка від 0 до 100 балів
+  - grade (number, CHECK 0..100)- підсумкова оцінка від 0 до 100 балів
   - status (string)- статус зарахування
   - comment (string)- додатковий коментар
   - UNIQUE(student_id, course_id)
