@@ -1,0 +1,112 @@
+# Сутності та атрибути
+
+- FACULTY:
+  - faculty_id (number, PK)- унікальний ідентифікатор
+  - faculty_name (string)- назва факультету
+  - short_name (string)- скорочена назва факультету
+  - building_number (number)- номер корпусу
+  - phone (string)- контактний телефон
+  - email (string, unique)- електронна пошта
+  - dean_name (string)- ПІБ декана
+- DEPARTMENT:
+  - department_id (number, PK)- унікальний ідентифікатор
+  - department_name (string)- назва кафедри
+  - short_name (string)- скорочена назва кафедри
+  - room_number (number)- номер кабінету
+  - phone (string)- контактний телефон
+  - email (string, unique)- електронна пошта
+  - head_name (string)- ПІБ завідувача кафедри
+  - faculty_id (number, FK)- ідентифікатор факультету
+- SPECIALTY:
+  - specialty_id (number, PK)- унікальний ідентифікатор
+  - specialty_name (string)- назва спеціальності
+  - specialty_code (string, unique)- код спеціальності
+  - education_level (string)- рівень освіти
+  - study_form (string)- форма навчання
+  - study_duration (number)- термін навчання
+  - faculty_id (number, FK)- ідентифікатор факультету
+- GROUP:
+  - group_id (number, PK)- унікальний ідентифікатор
+  - group_name (string)- назва навчальної групи
+  - admission_year (number)- рік вступу
+  - course_year (number)- поточний курс навчання
+  - study_form (string)- форма навчання
+  - curator_name (string)- ПІБ куратора групи
+  - specialty_id (number, FK)- ідентифікатор спеціальності
+- STUDENT:
+  - student_id (number, PK)- унікальний ідентифікатор
+  - full_name (string)- ПІБ студента
+  - birth_date (date)- дата народження
+  - gender (string)- стать
+  - email (string, unique)- електронна пошта
+  - phone (string)- номер телефону
+  - address (string)- адреса проживання
+  - admission_date (date)- дата вступу
+  - study_status (string)- статус навчання
+  - group_id (number, FK)- ідентифікатор навчальної групи
+- TEACHER:
+  - teacher_id (number, PK)- унікальний ідентифікатор
+  - full_name (string)- ПІБ викладача
+  - email (string, unique)- електронна пошта
+  - phone (string)- номер телефону
+  - academic_title (string)- вчене звання
+  - academic_degree (string)- науковий ступінь
+  - position (string)- посада
+  - work_experience (number)- стаж роботи
+  - department_id (number, FK)- ідентифікатор кафедри
+- COURSE:
+  - course_id (number, PK)- унікальний ідентифікатор
+  - course_name (string)- назва дисципліни
+  - course_code (string, unique)- код дисципліни
+  - ects_credits (number)- кількість кредитів ECTS
+  - hours (number)- кількість навчальних годин
+  - assessment_type (string)- тип підсумкового контролю
+  - semester (number)- семестр викладання
+  - description (string)- опис дисципліни
+  - department_id (number, FK)- ідентифікатор кафедри
+- ENROLLMENT:
+  - enrollment_id (number, PK)- унікальний ідентифікатор
+  - student_id (number, FK)- ідентифікатор студента
+  - course_id (number, FK)- ідентифікатор курсу
+  - teacher_id (number, FK)- ідентифікатор викладача
+  - enrollment_date (date)- дата зарахування на курс
+  - grade (number, CHECK 0..100)- підсумкова оцінка від 0 до 100 балів
+  - status (string)- статус зарахування
+  - comment (string)- додатковий коментар
+  - UNIQUE(student_id, course_id)
+
+# Зв'язки між сутностями:
+
+- FACULTY -> DEPARTMENT (1:N):
+  - Один факультет може містити 0 або більше кафедр(0..N)
+  - Кожна кафедра належить лише одному факультету(1..1)
+- FACULTY -> SPECIALTY (1:N):
+  - Один факультет може містити 0 або більше спеціальностей(0..N)
+  - Кожна спеціальність належить лише одному факультету(1..1)
+- SPECIALTY -> GROUP (1:N):
+  - Одна спеціальність може містити 0 або більше груп(0..N)
+  - Кожна група належить лише одній спеціальності(1..1)
+- GROUP -> STUDENT (1:N):
+  - Одна група може містити 0 або більше студентів(0..N)
+  - Кожен студент належить лише одній групі(1..1)
+- DEPARTMENT -> TEACHER (1:N):
+  - Одна кафедра може містити 0 або більше викладачів(0..N)
+  - Кожен викладач належить лише одній кафедрі(1..1)
+- DEPARTMENT -> COURSE (1:N):
+  - Одна кафедра може містити 0 або більше курсів(0..N)
+  - Кожен курс належить лише одній кафедрі(1..1)
+- STUDENT <-> COURSE через ENROLLMENT (N:M):
+  - Один студент може бути зареєстрований на 0 або більше курсів(0..N)
+  - Один курс може містити 0 або більше студентів(0..N)
+- TEACHER -> ENROLLMENT (1:N):
+  - Один викладач може відповідати за 0 або більше зарахувань(0..N)
+  - Кожне зарахування належить лише одному викладачу(1..1)
+- STUDENT -> ENROLLMENT (1:N):
+  - Один студент може мати 0 або більше зарахувань(0..N)
+  - Кожне зарахування належить лише одному студенту(1..1)
+- COURSE -> ENROLLMENT (1:N):
+  - Один курс може містити 0 або більше зарахувань(0..N)
+  - Кожне зарахування належить лише одному курсу(1..1)
+
+
+<!-- PR review branch -->
