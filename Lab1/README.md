@@ -119,4 +119,5 @@ erDiagram
     COURSE ||--o{ ENROLLMENT : "містить (1:N)"
     TEACHER ||--o{ ENROLLMENT : "відповідає (1:N)"
 
+
 <!-- PR review branch -->
