@@ -70,6 +70,7 @@ erDiagram
         string phone
         string address
         date admission_date
+        date graduation_date
         string study_status
         number group_id FK
     }
