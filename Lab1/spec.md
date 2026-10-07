@@ -42,6 +42,7 @@
   - phone (string)- номер телефону
   - address (string)- адреса проживання
   - admission_date (date)- дата вступу
+  - graduation_date (date)- дата випуску
   - study_status (string)- статус навчання
   - group_id (number, FK)- ідентифікатор навчальної групи
 - TEACHER:
