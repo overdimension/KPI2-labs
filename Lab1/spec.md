@@ -64,6 +64,7 @@
   - semester (number)- семестр викладання
   - description (string)- опис дисципліни
   - department_id (number, FK)- ідентифікатор кафедри
+  - assessment_type (string)- тип підсумкового контролю
 - ENROLLMENT:
   - enrollment_id (number, PK)- унікальний ідентифікатор
   - student_id (number, FK)- ідентифікатор студента
