@@ -15,3 +15,6 @@
 4. **`EnrollmentService` (Service/Domain):** Сервіс бізнес-логіки, де виконуються перевірки доступності курсу, перевірка повторної реєстрації та розрахунок кредитів ECTS
 
 ---
+
+## Notice
+* Всі діаграми у форматах png та mermaid зняходяться у папці [Diagrams](https://github.com/overdimension/KPI2-labs/tree/lab3/Diagrams) 
