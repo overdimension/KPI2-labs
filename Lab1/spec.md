@@ -65,6 +65,7 @@
   - semester (number)- семестр викладання
   - description (string)- опис дисципліни
   - department_id (number, FK)- ідентифікатор кафедри
+  - is_available (BOOLEAN) - перевірка доступності курсу
 - ENROLLMENT:
   - enrollment_id (number, PK)- унікальний ідентифікатор
   - student_id (number, FK)- ідентифікатор студента
