@@ -7,15 +7,17 @@ sequenceDiagram
     participant EC as Enrollment Controller
     participant ES as Enrollment Service
 
-    Student->>WI: 1. submitRegistration
-    WI->>EC: 2. POST /api/enrollments
-    EC->>ES: 3. processEnrollment
+    Student->>WI: submitEnrollmentForm(courseId)
+    WI->>EC: POST /api/enrollments
+    EC->>ES: processEnrollment(studentId, courseId)
 
-    opt Course available AND ECTS <= 30
-        ES-->>EC: 4. EnrollmentResult
-        EC-->>WI: 5. 201 Created
-        WI-->>Student: 6. Display the course in the curriculum
+    opt ECTS limit check [totalECTS + courseECTS <= 30]
+        ES->>ES: recalculateStudentECTS(studentId)
     end
+
+    ES-->>EC: EnrollmentResult(status=SUCCESS)
+    EC-->>WI: 201 Created
+    WI-->>Student: renderSuccessMessage("Enrolled successfully")
 ```
 
 # Second diagram
@@ -27,15 +29,16 @@ sequenceDiagram
     participant EC as Enrollment Controller
     participant ES as Enrollment Service
 
-    Student->>WI: 1. submitRegistration
-    WI->>EC: 2. POST /api/enrollments
-    EC->>ES: 3. processEnrollment
+    Student->>WI: submitEnrollmentForm(courseId)
+    WI->>EC: POST /api/enrollments
+    EC->>ES: processEnrollment(studentId, courseId)
 
-    opt Course unavailable
-        ES-->>EC: 4. throw CourseUnavailableException
-        EC-->>WI: 5. 400 Bad Request
-        WI-->>Student: 6. Display error "Course is unavailable for registration"
+    opt course.is_available == false
+        ES-->>EC: throw CourseUnavailableException
     end
+
+    EC-->>WI: 400 Bad Request
+    WI-->>Student: renderErrorMessage("Course unavailable")
 ```
 
 # Third diagrams
@@ -47,15 +50,16 @@ sequenceDiagram
     participant EC as Enrollment Controller
     participant ES as Enrollment Service
 
-    Student->>WI: 1. submitRegistration
-    WI->>EC: 2. POST /api/enrollments
-    EC->>ES: 3. processEnrollment
+    Student->>WI: submitEnrollmentForm(courseId)
+    WI->>EC: POST /api/enrollments
+    EC->>ES: processEnrollment(studentId, courseId)
 
-    opt Student already enrolled
-        ES-->>EC: 4. throw DuplicateEnrollmentException
-        EC-->>WI: 5. 409 Conflict
-        WI-->>Student: 6. Display error "You are already registered for this course"
+    opt isAlreadyEnrolled(studentId, courseId) == true
+        ES-->>EC: throw DuplicateEnrollmentException
     end
+
+    EC-->>WI: 409 Conflict
+    WI-->>Student: renderErrorMessage("Already enrolled")
 ```
 
 # Full diagram
@@ -82,6 +86,6 @@ sequenceDiagram
     else Student already enrolled
         ES-->>EC: 6.1. throw DuplicateEnrollmentException
         EC-->>WI: 6.2. 409 Conflict
-        WI-->>Student: 5.3. Display error "You are already registered for this course"
+        WI-->>Student: 6.3. Display error "You are already registered for this course"
     end
 ```
